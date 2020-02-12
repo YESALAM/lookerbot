@@ -25,6 +25,7 @@ export class AmazonS3Store extends Store {
 
     const s3 = new AWS.S3({
       endpoint: new AWS.Endpoint(domain) as any,
+      signatureVersion: 'v4',
     })
 
     return new Promise<string>((resolve, reject) => {
