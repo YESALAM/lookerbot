@@ -13,6 +13,8 @@ import { IChannel, Service } from "./service"
 
 const botkit = require("botkit")
 const getUrls = require("get-urls")
+const morganBody = require('morgan-body');
+const bodyParser = require('body-parser');
 
 export class SlackService extends Service {
 
@@ -52,6 +54,9 @@ export class SlackService extends Service {
 
     this.controller.setupWebserver(process.env.PORT || 3333,
       (err: any, expressWebserver: express.Application) => {
+
+        expressWebserver.use(bodyParser.json())
+        morganBody(expressWebserver)
 
         this.controller.createWebhookEndpoints(expressWebserver)
         super.setWebserver(expressWebserver)
